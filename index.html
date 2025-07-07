@@ -1,0 +1,1118 @@
+<!DOCTYPE html><html lang="es"><head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Análisis Económico: Teletrabajo y Movilidad Urbana en República Dominicana</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.2.4/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --primary: #0f766e;
+            --primary-light: #14b8a6;
+            --secondary: #78716c;
+            --accent: #f59e0b;
+            --neutral: #f5f5f4;
+            --base: #fafaf9;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--base);
+            color: #292524;
+            overflow-x: hidden;
+        }
+        
+        .serif {
+            font-family: 'Crimson Text', serif;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(15, 118, 110, 0.9) 0%, rgba(120, 113, 108, 0.8) 100%);
+        }
+        
+        .toc-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 280px;
+            background: white;
+            border-right: 1px solid #e7e5e4;
+            z-index: 1000;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .main-content {
+            margin-left: 280px;
+            min-height: 100vh;
+            transition: margin-left 0.3s ease;
+        }
+        
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary) 0%, transparent 100%);
+            margin: 3rem 0;
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .citation {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px dotted var(--primary);
+        }
+        
+        .citation:hover {
+            color: var(--primary-light);
+            border-bottom-style: solid;
+        }
+        
+        .bento-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .bento-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e7e5e4;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #f0fdfa 0%, #ecfdf5 100%);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+        
+        .data-point {
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-block;
+            margin: 0.25rem;
+        }
+        
+        .mermaid-container {
+            display: flex;
+            justify-content: center;
+            min-height: 300px;
+            max-height: 800px;
+            background: #ffffff;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mermaid-container .mermaid {
+            width: 100%;
+            max-width: 100%;
+            height: 100%;
+            cursor: grab;
+            transition: transform 0.3s ease;
+            transform-origin: center center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            touch-action: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .mermaid-container .mermaid svg {
+            max-width: 100%;
+            height: 100%;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .mermaid-container .mermaid:active {
+            cursor: grabbing;
+        }
+
+        .mermaid-container.zoomed .mermaid {
+            height: 100%;
+            width: 100%;
+            cursor: grab;
+        }
+
+        .mermaid-controls {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+            z-index: 20;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 8px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .mermaid-control-btn {
+            background: #ffffff;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #374151;
+            font-size: 14px;
+            min-width: 36px;
+            height: 36px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mermaid-control-btn:hover {
+            background: #f8fafc;
+            border-color: #3b82f6;
+            color: #3b82f6;
+            transform: translateY(-1px);
+        }
+
+        .mermaid-control-btn:active {
+            transform: scale(0.95);
+        }
+        
+        @media (max-width: 1024px) {
+            .toc-fixed {
+                transform: translateX(-100%);
+            }
+            
+            .toc-fixed.open {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .mermaid-control-btn:not(.reset-zoom) {
+                display: none;
+            }
+            .mermaid-controls {
+                top: auto;
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-gradient {
+                padding: 2rem 1rem;
+            }
+            
+            .hero-gradient h1 {
+                font-size: 2.5rem;
+                line-height: 1.2;
+            }
+            
+            .hero-gradient p {
+                font-size: 1.1rem;
+            }
+            
+            .bento-card {
+                padding: 1.5rem;
+            }
+            
+            .bento-card h3 {
+                font-size: 1.5rem;
+            }
+            
+            .px-8 {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+    </style>
+  </head>
+
+  <body>
+    <!-- Table of Contents -->
+    <nav class="toc-fixed" id="toc">
+      <div class="p-6">
+        <h3 class="text-lg font-bold text-stone-800 mb-4">Índice</h3>
+        <ul class="space-y-2 text-sm">
+          <li>
+            <a href="#hero" class="block py-1 text-stone-600 hover:text-teal-600 transition-colors">Introducción</a>
+          </li>
+          <li>
+            <a href="#impacto-teletrabajo" class="block py-1 text-stone-600 hover:text-teal-600 transition-colors">1. Impacto del Teletrabajo</a>
+          </li>
+          <li class="ml-4">
+            <a href="#productividad" class="block py-1 text-stone-500 hover:text-teal-600 transition-colors">1.1 Productividad</a>
+          </li>
+          <li class="ml-4">
+            <a href="#mercado-laboral" class="block py-1 text-stone-500 hover:text-teal-600 transition-colors">1.2 Mercado Laboral</a>
+          </li>
+          <li class="ml-4">
+            <a href="#ahorro-instituciones" class="block py-1 text-stone-500 hover:text-teal-600 transition-colors">1.3 Ahorros</a>
+          </li>
+          <li>
+            <a href="#congestion" class="block py-1 text-stone-600 hover:text-teal-600 transition-colors">2. Costos de Congestión</a>
+          </li>
+          <li class="ml-4">
+            <a href="#perdidas-pib" class="block py-1 text-stone-500 hover:text-teal-600 transition-colors">2.1 Pérdidas en PIB</a>
+          </li>
+          <li class="ml-4">
+            <a href="#eficiencia-transporte" class="block py-1 text-stone-500 hover:text-teal-600 transition-colors">2.2 Eficiencia</a>
+          </li>
+          <li class="ml-4">
+            <a href="#costos-individuales" class="block py-1 text-stone-500 hover:text-teal-600 transition-colors">2.3 Costos Individuales</a>
+          </li>
+          <li>
+            <a href="#implicaciones" class="block py-1 text-stone-600 hover:text-teal-600 transition-colors">3. Implicaciones Macroeconómicas</a>
+          </li>
+          <li>
+            <a href="#conclusiones" class="block py-1 text-stone-600 hover:text-teal-600 transition-colors">4. Conclusiones</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Mobile Menu Toggle -->
+    <button class="lg:hidden fixed top-4 left-4 z-50 bg-white p-2 rounded-lg shadow-lg" id="menu-toggle">
+      <i class="fas fa-bars text-stone-600"></i>
+    </button>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Hero Section -->
+      <section id="hero" class="relative min-h-screen flex items-center">
+        <div class="absolute inset-0">
+          <img src="https://kimi-web-img.moonshot.cn/img/placeholder-0620/图片11.png" alt="Avenida principal de Santo Domingo con tráfico congestionado" class="w-full h-full object-cover" size="wallpaper" aspect="wide" style="photo" query="Santo Domingo trafico avenida principal" referrerpolicy="no-referrer"/>
+          <div class="absolute inset-0 hero-gradient"></div>
+        </div>
+
+        <div class="relative z-10 container mx-auto px-8 py-16">
+          <div class="bento-grid items-center">
+            <!-- Title Section -->
+            <div class="space-y-6">
+              <h1 class="serif text-5xl lg:text-6xl font-bold text-white leading-tight">
+                <em class="italic">Teletrabajo</em> y Movilidad Urbana
+              </h1>
+              <p class="text-xl text-stone-100 font-light leading-relaxed">
+                Un análisis económico de los costos, beneficios y desafíos para la República Dominicana
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span class="data-point">RD$12MM en ahorros</span>
+                <span class="data-point">22% empleos teletrabajables</span>
+                <span class="data-point">US$300M pérdidas anuales</span>
+              </div>
+            </div>
+
+            <!-- Key Stats -->
+            <div class="bento-card bg-white/95 backdrop-blur-sm">
+              <h3 class="serif text-2xl font-bold text-stone-800 mb-4">Panorama Económico</h3>
+              <div class="grid grid-cols-2 gap-4">
+                <div class="text-center">
+                  <div class="text-3xl font-bold text-teal-600">97%</div>
+                  <div class="text-sm text-stone-600">Solicitudes tramitadas en 24h</div>
+                </div>
+                <div class="text-center">
+                  <div class="text-3xl font-bold text-amber-600">2%</div>
+                  <div class="text-sm text-stone-600">Del PIB en costos de congestión</div>
+                </div>
+                <div class="text-center">
+                  <div class="text-3xl font-bold text-stone-600">500K</div>
+                  <div class="text-sm text-stone-600">Empleos perdidos (2020)</div>
+                </div>
+                <div class="text-center">
+                  <div class="text-3xl font-bold text-rose-600">57.3%</div>
+                  <div class="text-sm text-stone-600">Informalidad laboral</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="container mx-auto px-8 py-16 max-w-6xl">
+        <!-- Introduction -->
+        <div class="prose prose-lg max-w-none mb-16">
+          <p class="text-xl leading-relaxed text-stone-700">
+            El análisis económico del teletrabajo y la movilidad urbana en la República Dominicana revela un panorama complejo. El teletrabajo presenta <strong>oportunidades significativas para aumentar la productividad y generar ahorros</strong> tanto para instituciones públicas como privadas, como lo demuestra el piloto de la Dirección General de Contrataciones Públicas (DGCP). Sin embargo, su impacto está limitado por la <strong>baja proporción de empleos teletrabajables</strong> (estimada en solo el 22% por la CEPAL) y desafíos como la <strong>brecha digital y la necesidad de una regulación laboral adecuada</strong>.
+          </p>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Section 1: Impacto del Teletrabajo -->
+        <section id="impacto-teletrabajo" class="mb-16">
+          <h2 class="serif text-4xl font-bold text-stone-800 mb-8">1. Impacto del Teletrabajo en la Productividad y el Mercado Laboral</h2>
+
+          <div id="productividad" class="mb-12">
+            <h3 class="serif text-2xl font-semibold text-stone-700 mb-6">1.1 Efectos en la Productividad Empresarial e Individual</h3>
+
+            <div class="highlight-box">
+              <h4 class="font-semibold text-stone-800 mb-3">Caso de Estudio: DGCP</h4>
+              <p class="text-stone-700 mb-4">
+                El estudio piloto de la <a href="https://www.dgcp.gob.do/wp-content/uploads/noticias/informe-final-del-piloto-de-teletrabajo.pdf" class="citation">Dirección General de Contrataciones Públicas (DGCP)</a> reveló que la productividad general de la institución aumentó, con el <strong>97% de las solicitudes en línea tramitadas en las primeras 24 horas</strong>, superando ampliamente el plazo estándar de 4 días.
+              </p>
+              <ul class="list-disc list-inside space-y-2 text-stone-700">
+                <li>Más de <strong>13,000 asistencias técnicas</strong> ofrecidas de forma completamente virtual</li>
+                <li>Redistribución del trabajo de manera más equitativa entre colaboradores</li>
+                <li><strong>Ahorros institucionales superiores a RD$12,000,000</strong></li>
+              </ul>
+            </div>
+
+            <div class="bento-grid mt-8">
+              <div class="bento-card">
+                <h4 class="font-semibold text-stone-800 mb-3">Beneficios de Productividad</h4>
+                <ul class="space-y-2 text-stone-700">
+                  <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Mayor eficiencia en trámites</li>
+                  <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Reducción de tiempos de respuesta</li>
+                  <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Distribución equitativa de carga laboral</li>
+                </ul>
+              </div>
+              <div class="bento-card">
+                <h4 class="font-semibold text-stone-800 mb-3">Desafíos Identificados</h4>
+                <ul class="space-y-2 text-stone-700">
+                  <li class="flex items-center"><i class="fas fa-exclamation-triangle text-amber-500 mr-2"></i>Percepción de exceso de trabajo</li>
+                  <li class="flex items-center"><i class="fas fa-exclamation-triangle text-amber-500 mr-2"></i>Dificultad para separar vida laboral/personal</li>
+                  <li class="flex items-center"><i class="fas fa-exclamation-triangle text-amber-500 mr-2"></i>Limitación de solo 22% de empleos teletrabajables</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div id="mercado-laboral" class="mb-12">
+            <h3 class="serif text-2xl font-semibold text-stone-700 mb-6">1.2 Transformaciones en el Mercado Laboral Dominicano</h3>
+
+            <p class="text-stone-700 mb-6">
+              La pandemia de COVID-19 provocó un <strong>shock significativo en el mercado laboral dominicano</strong>, con una pérdida de más de <strong>500,000 puestos de trabajo en 2020</strong>
+              <a href="https://www.swissinfo.ch/spa/r-dominicana-habr%C3%A1-recuperado-niveles-de-empleo-prepandemia-a-final-de-a%C3%B1o/47176852" class="citation">[4]</a>. La <a href="https://indotel.gob.do/wp-content/uploads/2022/10/resolucion-23-2020-sobre-regulacion-del-teletrabajo-como-modalidad-especial-de-trabajo-1.pdf" class="citation">Resolución Núm. 23/2020 del Ministerio de Trabajo</a> estableció las bases para regular el teletrabajo, indicando un cambio estructural.
+            </p>
+
+            <div class="highlight-box">
+              <h4 class="font-semibold text-stone-800 mb-3">Impacto en la Formalidad Laboral</h4>
+              <p class="text-stone-700">
+                Según la <a href="https://www.one.gob.do/media/ryaebnud/ppanorama-estad%C3%ADstico-108-coyuntura-laboral-en-rd-empleo-en-covid.pdf" class="citation">Oficina Nacional de Estadística (ONE)</a>, en 2020 hubo una disminución en el porcentaje de personas ocupadas en el sector formal (del 48.8% en 2019 al 46.3% en 2020) y un aumento correspondiente en el sector informal (del 45.7% al 48.8%).
+              </p>
+            </div>
+          </div>
+
+          <div id="ahorro-instituciones" class="mb-12">
+            <h3 class="serif text-2xl font-semibold text-stone-700 mb-6">1.3 Potencial de Ahorro para Instituciones Públicas y Privadas</h3>
+
+            <div class="bento-grid">
+              <div class="bento-card">
+                <h4 class="font-semibold text-stone-800 mb-4">Ahorros Institucionales (DGCP)</h4>
+                <div class="space-y-3">
+                  <div class="flex justify-between">
+                    <span class="text-stone-600">Total ahorrado:</span>
+                    <span class="font-bold text-teal-600">RD$12,000,000</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-stone-600">Equivalente en USD:</span>
+                    <span class="font-bold text-teal-600">~US$219,217</span>
+                  </div>
+                  <div class="text-sm text-stone-600 mt-4">
+                    <strong>Rubros de ahorro:</strong> Materiales de oficina, almuerzos, copias, combustible, vestimenta laboral
+                  </div>
+                </div>
+              </div>
+              <div class="bento-card">
+                <h4 class="font-semibold text-stone-800 mb-4">Ahorros para Empleados</h4>
+                <div class="space-y-3">
+                  <div class="flex justify-between">
+                    <span class="text-stone-600">Ahorro mensual promedio:</span>
+                    <span class="font-bold text-amber-600">US$357</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-stone-600">Ahorro neto mensual:</span>
+                    <span class="font-bold text-amber-600">US$243</span>
+                  </div>
+                  <div class="text-sm text-stone-600 mt-4">
+                    <strong>Fuente:</strong>
+                    <a href="https://portal.amelica.org/ameli/journal/499/4992368007/html/" class="citation">Estudio costarricense sobre teletrabajo</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Section 2: Costos de Congestión -->
+        <section id="congestion" class="mb-16">
+          <h2 class="serif text-4xl font-bold text-stone-800 mb-8">2. Costos Económicos de la Congestión Vehicular en Santo Domingo</h2>
+
+          <div id="perdidas-pib" class="mb-12">
+            <h3 class="serif text-2xl font-semibold text-stone-700 mb-6">2.1 Estimación de Pérdidas por Congestión en el PIB Nacional</h3>
+
+            <div class="highlight-box">
+              <h4 class="font-semibold text-stone-800 mb-3">Impacto Económico Directo</h4>
+              <p class="text-stone-700 mb-4">
+                Los atascos de tráfico en 2023 generaron un <strong>costo económico superior a los 300 millones de dólares anuales</strong>
+                <a href="https://pinceldigital.do/se-nos-va-la-vida-en-la-capital/" class="citation">[68]</a>. Adicionalmente, expertos advierten que los accidentes de tránsito y deficiencias del sistema de tráfico representan un costo estimado en el <strong>2% del Producto Interno Bruto (PIB)</strong>
+                <a href="https://resumenturismo.com/experto-advierte-sobre-el-alto-costo-economico-y-humano-de-las-deficiencias-del-trafico-en-rd/" class="citation">[69]</a>.
+              </p>
+            </div>
+
+            <div class="bento-grid">
+              <div class="bento-card">
+                <h4 class="font-semibold text-stone-800 mb-4">Contexto Regional</h4>
+                <p class="text-stone-700 mb-4">
+                  Según <a href="https://www.perkons.com/wp-content/uploads/2022/01/congestion-del-transito-urbano-causas-y-consecuencias-economicas-y-sociales.pdf" class="citation">CEPAL</a>, en América Latina:
+                </p>
+                <ul class="space-y-2 text-stone-700">
+                  <li>• Operación de vehículos consume <strong>3.5% del PIB regional</strong></li>
+                  <li>• Valor social del tiempo: <strong>3% del PIB regional</strong></li>
+                  <li>• San Salvador pierde <strong>$25 millones anuales</strong> (0.6% de su economía)</li>
+                </ul>
+              </div>
+              <div class="bento-card">
+                <h4 class="font-semibold text-stone-800 mb-4">Componentes del Costo</h4>
+                <ul class="space-y-2 text-stone-700">
+                  <li class="flex items-center"><i class="fas fa-clock text-rose-500 mr-2"></i>Pérdida de horas productivas</li>
+                  <li class="flex items-center"><i class="fas fa-gas-pump text-rose-500 mr-2"></i>Aumento consumo de combustible</li>
+                  <li class="flex items-center"><i class="fas fa-truck text-rose-500 mr-2"></i>Mayores costos de operación</li>
+                  <li class="flex items-center"><i class="fas fa-lungs text-rose-500 mr-2"></i>Contaminación ambiental</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div id="eficiencia-transporte" class="mb-12">
+            <h3 class="serif text-2xl font-semibold text-stone-700 mb-6">2.2 Impacto en la Eficiencia del Transporte Urbano</h3>
+
+            <p class="text-stone-700 mb-6">
+              El <a href="https://www.idbinvest.org/sites/default/files/2022-03/EZSHARE-857593544-3.pdf" class="citation">Banco Interamericano de Desarrollo (BID)</a> destaca &#34;importantes deficiencias en lo relativo al transporte público urbano&#34; que contribuyen directamente a &#34;elevadas tasas de congestión vehicular&#34;. La iniciativa <a href="https://eldinero.com.do/327770/rd-se-mueve-busca-reducir-congestion-del-transito-en-el-gran-santo-domingo/" class="citation">&#34;RD se Mueve&#34;</a> busca reorganizar la movilidad vehicular para mejorar la eficiencia del sistema.
+            </p>
+
+            <div class="highlight-box">
+              <h4 class="font-semibold text-stone-800 mb-3">Costo del Transporte Público</h4>
+              <p class="text-stone-700">
+                El <strong>costo promedio de un viaje en transporte público en Santo Domingo oscila entre los 55 y 100 pesos dominicanos</strong>
+                <a href="https://presidencia.gob.do/noticias/gobierno-dominicano-presenta-el-sistema-integrado-de-transporte-para-santo-domingo" class="citation">[62]</a>, lo que implica un gasto anual considerable para los trabajadores que se desplazan diariamente.
+              </p>
+            </div>
+          </div>
+
+          <div id="costos-individuales" class="mb-12">
+            <h3 class="serif text-2xl font-semibold text-stone-700 mb-6">2.3 Costos Asociados para Individuos y Empresas</h3>
+
+            <div class="bento-grid">
+              <div class="bento-card">
+                <h4 class="font-semibold text-stone-800 mb-4">Impacto en Individuos</h4>
+                <ul class="space-y-2 text-stone-700">
+                  <li>• <strong>Tiempo perdido</strong> en tráfico</li>
+                  <li>• <strong>Aumento del gasto en combustible</strong></li>
+                  <li>• <strong>Desgaste acelerado</strong> de vehículos</li>
+                  <li>• <strong>Estrés y problemas de salud</strong></li>
+                  <li>• <strong>Gastos en transporte público</strong> (RD$55-100 por viaje)</li>
+                </ul>
+              </div>
+              <div class="bento-card">
+                <h4 class="font-semibold text-stone-800 mb-4">Impacto en Empresas</h4>
+                <ul class="space-y-2 text-stone-700">
+                  <li>• <strong>Menor productividad</strong> de empleados</li>
+                  <li>• <strong>Mayores costos de operación</strong> para flotas</li>
+                  <li>• <strong>Retrasos en cadenas de suministro</strong></li>
+                  <li>• <strong>Tarifas de transporte de carga</strong>: US$0.14/km-ton</li>
+                  <li>• <strong>Reducción de competitividad</strong></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Section 3: Implicaciones Macroeconómicas -->
+        <section id="implicaciones" class="mb-16">
+          <h2 class="serif text-4xl font-bold text-stone-800 mb-8">3. Implicaciones Macroeconómicas y de Política Pública</h2>
+
+          <div class="bento-grid">
+            <div class="bento-card">
+              <h3 class="serif text-xl font-semibold text-stone-800 mb-4">Contribución al PIB y Competitividad</h3>
+              <p class="text-stone-700 mb-4">
+                El teletrabajo puede <strong>potenciar la generación de empleos, aumentar la productividad y la competitividad de las empresas</strong>, según la <a href="https://indotel.gob.do/wp-content/uploads/2022/10/resolucion-23-2020-sobre-regulacion-del-teletrabajo-como-modalidad-especial-de-trabajo-1.pdf" class="citation">Resolución Núm. 23/2020</a>.
+              </p>
+              <div class="space-y-2">
+                <div class="flex items-center text-sm">
+                  <i class="fas fa-plus text-green-500 mr-2"></i>
+                  Acceso a talento global
+                </div>
+                <div class="flex items-center text-sm">
+                  <i class="fas fa-plus text-green-500 mr-2"></i>
+                  Entradas de divisas por servicios
+                </div>
+                <div class="flex items-center text-sm">
+                  <i class="fas fa-plus text-green-500 mr-2"></i>
+                  Mayor agilidad empresarial
+                </div>
+              </div>
+            </div>
+            <div class="bento-card">
+              <h3 class="serif text-xl font-semibold text-stone-800 mb-4">Debate Regulatorio</h3>
+              <p class="text-stone-700 mb-4">
+                El marco regulatorio debe equilibrar <strong>flexibilidad con protección de derechos laborales</strong>. La <a href="https://library.fes.de/pdf-files/bueros/fescaribe/17390.pdf" class="citation">Friedrich-Ebert-Stiftung</a> advierte sobre la transferencia de costos a trabajadores.
+              </p>
+              <div class="space-y-2">
+                <div class="flex items-center text-sm">
+                  <i class="fas fa-exclamation-triangle text-amber-500 mr-2"></i>
+                  Derecho a desconexión digital
+                </div>
+                <div class="flex items-center text-sm">
+                  <i class="fas fa-exclamation-triangle text-amber-500 mr-2"></i>
+                  Cobertura de costos operativos
+                </div>
+                <div class="flex items-center text-sm">
+                  <i class="fas fa-exclamation-triangle text-amber-500 mr-2"></i>
+                  Protección de datos personales
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="highlight-box mt-8">
+            <h4 class="font-semibold text-stone-800 mb-3">Gestión de Movilidad Urbana</h4>
+            <p class="text-stone-700 mb-4">
+              El teletrabajo puede ser una <strong>estrategia complementaria crucial</strong> para la gestión de la movilidad urbana. La <a href="https://mepyd.gob.do/el-pais-requiere-nueva-ley-de-transito-y-transporte-para-reducir-los-accidentes/" class="citation">MEPyD</a> ha recibido cooperación técnica del BID para regular el tránsito en Santo Domingo.
+            </p>
+            <ul class="list-disc list-inside space-y-1 text-stone-700">
+              <li>Reducción de desplazamientos en horas pico</li>
+              <li>Mejora de fluidez del transporte</li>
+              <li>Disminución de consumo de combustible y emisiones</li>
+              <li>Impacto positivo en logística de mercancías</li>
+            </ul>
+          </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Section 4: Conclusiones -->
+        <section id="conclusiones" class="mb-16">
+          <h2 class="serif text-4xl font-bold text-stone-800 mb-8">4. Conclusiones y Recomendaciones para el Debate Económico</h2>
+
+          <div class="highlight-box">
+            <h3 class="serif text-xl font-semibold text-stone-800 mb-4">Síntesis de Beneficios y Desafíos</h3>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <h4 class="font-semibold text-green-600 mb-2">Beneficios Potenciales</h4>
+                <ul class="space-y-1 text-stone-700 text-sm">
+                  <li>• Aumento de productividad institucional</li>
+                  <li>• Ahorros significativos (RD$12MM en DGCP)</li>
+                  <li>• Mitigación de costos de congestión (US$300M anuales)</li>
+                  <li>• Mejora en eficiencia del transporte</li>
+                  <li>• Mayor competitividad empresarial</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-amber-600 mb-2">Desafíos Estructurales</h4>
+                <ul class="space-y-1 text-stone-700 text-sm">
+                  <li>• Solo 22% de empleos teletrabajables</li>
+                  <li>• Brecha digital e infraestructura tecnológica</li>
+                  <li>• Inestabilidad del suministro eléctrico</li>
+                  <li>• Marco regulatorio en desarrollo</li>
+                  <li>• Riesgo de profundizar desigualdades</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="serif text-2xl font-semibold text-stone-700 mb-6 mt-12">Propuestas para Políticas Públicas</h3>
+
+          <div class="bento-grid">
+            <div class="bento-card">
+              <h4 class="font-semibold text-stone-800 mb-3">1. Marco Regulatorio Integral</h4>
+              <ul class="space-y-2 text-stone-700 text-sm">
+                <li>• Definir responsabilidades claras</li>
+                <li>• Garantizar derecho a desconexión</li>
+                <li>• Regular riesgos laborales</li>
+                <li>• Promover igualdad de oportunidades</li>
+              </ul>
+            </div>
+            <div class="bento-card">
+              <h4 class="font-semibold text-stone-800 mb-3">2. Inversión en Infraestructura</h4>
+              <ul class="space-y-2 text-stone-700 text-sm">
+                <li>• Ampliar acceso a internet</li>
+                <li>• Capacitación en habilidades digitales</li>
+                <li>• Apoyo a PYMES</li>
+                <li>• Mejorar suministro eléctrico</li>
+              </ul>
+            </div>
+            <div class="bento-card">
+              <h4 class="font-semibold text-stone-800 mb-3">3. Gestión de Movilidad</h4>
+              <ul class="space-y-2 text-stone-700 text-sm">
+                <li>• Promover teletrabajo permanente</li>
+                <li>• Mejorar transporte público</li>
+                <li>• Sistemas inteligentes de transporte</li>
+                <li>• Planificación urbana integrada</li>
+              </ul>
+            </div>
+            <div class="bento-card">
+              <h4 class="font-semibold text-stone-800 mb-3">4. Investigación y Monitoreo</h4>
+              <ul class="space-y-2 text-stone-700 text-sm">
+                <li>• Estudios periódicos de costos</li>
+                <li>• Evaluación de impacto</li>
+                <li>• Monitoreo de políticas</li>
+                <li>• Ajustes continuos</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="mt-12 p-8 bg-gradient-to-r from-teal-50 to-stone-50 rounded-xl border border-teal-200">
+            <h4 class="serif text-xl font-semibold text-stone-800 mb-4">Llamado al Debate Económico</h4>
+            <p class="text-stone-700 leading-relaxed">
+              El análisis revela que el teletrabajo y la gestión de la movilidad urbana presentan <strong>oportunidades económicas significativas</strong> para la República Dominicana, pero requieren un <strong>enfoque integral y equilibrado</strong>. El debate entre economistas debe centrarse en cómo maximizar los beneficios del teletrabajo y la gestión del tráfico mientras se mitigan sus potenciales efectos negativos, como la profundización de desigualdades y la transferencia de costos a los trabajadores.
+            </p>
+            <p class="text-stone-700 mt-4 leading-relaxed">
+              La implementación de políticas públicas bien diseñadas, basadas en evidencia y con enfoque inclusivo, puede convertir estos desafíos en <strong>oportunidades para un desarrollo económico más sostenible, inclusivo y competitivo</strong>.
+            </p>
+          </div>
+
+          <!-- Economic Flow Diagram -->
+          <div class="mt-12">
+            <h4 class="serif text-xl font-semibold text-stone-800 mb-6 text-center">Flujo Económico del Teletrabajo y Movilidad Urbana</h4>
+            <div class="mermaid-container">
+              <div class="mermaid-controls">
+                <button class="mermaid-control-btn zoom-in" title="放大">
+                  <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="mermaid-control-btn zoom-out" title="缩小">
+                  <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="mermaid-control-btn reset-zoom" title="重置">
+                  <i class="fas fa-expand-arrows-alt"></i>
+                </button>
+                <button class="mermaid-control-btn fullscreen" title="全屏查看">
+                  <i class="fas fa-expand"></i>
+                </button>
+              </div>
+              <div class="mermaid">
+                graph TD
+                A[&#34;Teletrabajo&#34;] --&gt; B[&#34;Aumento Productividad&#34;]
+                A --&gt; C[&#34;Reducción Costos&#34;]
+                A --&gt; D[&#34;Menos Desplazamientos&#34;]
+
+                B --&gt; E[&#34;Crecimiento PIB&#34;]
+                C --&gt; F[&#34;Ahorros Empresas/Empleados&#34;]
+                D --&gt; G[&#34;Menor Congestión&#34;]
+
+                G --&gt; H[&#34;Reducción Pérdidas US$300M&#34;]
+                G --&gt; I[&#34;Mejor Eficiencia Transporte&#34;]
+                H --&gt; J[&#34;Mayor Competitividad&#34;]
+                I --&gt; J
+
+                K[&#34;Desafíos&#34;] --&gt; L[&#34;22% Empleos Teletrabajables&#34;]
+                K --&gt; M[&#34;Brecha Digital&#34;]
+                K --&gt; N[&#34;Regulación Pendiente&#34;]
+
+                style A fill:#14b8a6,stroke:#0f766e,color:#fff,stroke-width:2px
+                style E fill:#f59e0b,stroke:#d97706,color:#fff,stroke-width:2px
+                style H fill:#ef4444,stroke:#dc2626,color:#fff,stroke-width:2px
+                style J fill:#10b981,stroke:#059669,color:#fff,stroke-width:2px
+                style K fill:#f87171,stroke:#dc2626,color:#fff,stroke-width:2px
+                style B fill:#f0fdfa,stroke:#14b8a6,color:#0f766e,stroke-width:1px
+                style C fill:#f0fdfa,stroke:#14b8a6,color:#0f766e,stroke-width:1px
+                style D fill:#f0fdfa,stroke:#14b8a6,color:#0f766e,stroke-width:1px
+                style F fill:#fef3c7,stroke:#f59e0b,color:#92400e,stroke-width:1px
+                style G fill:#fef2f2,stroke:#ef4444,color:#991b1b,stroke-width:1px
+                style I fill:#f0fdf4,stroke:#10b981,color:#166534,stroke-width:1px
+                style L fill:#fef2f2,stroke:#f87171,color:#991b1b,stroke-width:1px
+                style M fill:#fef2f2,stroke:#f87171,color:#991b1b,stroke-width:1px
+                style N fill:#fef2f2,stroke:#f87171,color:#991b1b,stroke-width:1px
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <script>
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            themeVariables: {
+                primaryColor: '#14b8a6',
+                primaryTextColor: '#ffffff',
+                primaryBorderColor: '#0f766e',
+                lineColor: '#78716c',
+                secondaryColor: '#f59e0b',
+                tertiaryColor: '#f5f5f4',
+                background: '#ffffff',
+                mainBkg: '#ffffff',
+                secondaryBkg: '#f5f5f4',
+                tertiaryBkg: '#f0fdfa',
+                // Enhanced contrast colors
+                nodeBorder: '#292524',
+                clusterBkg: '#fafaf9',
+                clusterBorder: '#78716c',
+                defaultLinkColor: '#78716c',
+                titleColor: '#292524',
+                edgeLabelBackground: '#ffffff',
+                nodeTextColor: '#ffffff',
+                // Additional contrast improvements
+                sectionBkgColor: '#f5f5f4',
+                altSectionBkgColor: '#ffffff',
+                gridColor: '#e7e5e4',
+                textColor: '#292524',
+                taskBkgColor: '#14b8a6',
+                taskTextColor: '#ffffff',
+                activeTaskBkgColor: '#0f766e',
+                activeTaskBorderColor: '#134e4a',
+                gridColor: '#e7e5e4',
+                section0: '#f0fdfa',
+                section1: '#fef3c7',
+                section2: '#fef2f2',
+                section3: '#f0fdf4'
+            },
+            flowchart: {
+                useMaxWidth: false,
+                htmlLabels: true,
+                curve: 'basis',
+                padding: 30,
+                nodeSpacing: 60,
+                rankSpacing: 100,
+                diagramPadding: 30
+            },
+            fontSize: 14,
+            fontFamily: 'Inter, sans-serif',
+            wrap: true,
+            securityLevel: 'loose'
+        });
+
+        // Initialize Mermaid Controls for zoom and pan
+        function initializeMermaidControls() {
+            const containers = document.querySelectorAll('.mermaid-container');
+
+            containers.forEach(container => {
+                const mermaidElement = container.querySelector('.mermaid');
+                let scale = 1;
+                let isDragging = false;
+                let startX, startY, translateX = 0, translateY = 0;
+
+                // 触摸相关状态
+                let isTouch = false;
+                let touchStartTime = 0;
+                let initialDistance = 0;
+                let initialScale = 1;
+                let isPinching = false;
+
+                // Zoom controls
+                const zoomInBtn = container.querySelector('.zoom-in');
+                const zoomOutBtn = container.querySelector('.zoom-out');
+                const resetBtn = container.querySelector('.reset-zoom');
+                const fullscreenBtn = container.querySelector('.fullscreen');
+
+                function updateTransform() {
+                    mermaidElement.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+
+                    if (scale > 1) {
+                        container.classList.add('zoomed');
+                    } else {
+                        container.classList.remove('zoomed');
+                    }
+
+                    mermaidElement.style.cursor = isDragging ? 'grabbing' : 'grab';
+                }
+
+                if (zoomInBtn) {
+                    zoomInBtn.addEventListener('click', () => {
+                        scale = Math.min(scale * 1.25, 4);
+                        updateTransform();
+                    });
+                }
+
+                if (zoomOutBtn) {
+                    zoomOutBtn.addEventListener('click', () => {
+                        scale = Math.max(scale / 1.25, 0.3);
+                        if (scale <= 1) {
+                            translateX = 0;
+                            translateY = 0;
+                        }
+                        updateTransform();
+                    });
+                }
+
+                if (resetBtn) {
+                    resetBtn.addEventListener('click', () => {
+                        scale = 1;
+                        translateX = 0;
+                        translateY = 0;
+                        updateTransform();
+                    });
+                }
+
+                if (fullscreenBtn) {
+                    fullscreenBtn.addEventListener('click', () => {
+                        if (container.requestFullscreen) {
+                            container.requestFullscreen();
+                        } else if (container.webkitRequestFullscreen) {
+                            container.webkitRequestFullscreen();
+                        } else if (container.msRequestFullscreen) {
+                            container.msRequestFullscreen();
+                        }
+                    });
+                }
+
+                // Mouse Events
+                mermaidElement.addEventListener('mousedown', (e) => {
+                    if (isTouch) return; // 如果是触摸设备，忽略鼠标事件
+
+                    isDragging = true;
+                    startX = e.clientX - translateX;
+                    startY = e.clientY - translateY;
+                    mermaidElement.style.cursor = 'grabbing';
+                    updateTransform();
+                    e.preventDefault();
+                });
+
+                document.addEventListener('mousemove', (e) => {
+                    if (isDragging && !isTouch) {
+                        translateX = e.clientX - startX;
+                        translateY = e.clientY - startY;
+                        updateTransform();
+                    }
+                });
+
+                document.addEventListener('mouseup', () => {
+                    if (isDragging && !isTouch) {
+                        isDragging = false;
+                        mermaidElement.style.cursor = 'grab';
+                        updateTransform();
+                    }
+                });
+
+                document.addEventListener('mouseleave', () => {
+                    if (isDragging && !isTouch) {
+                        isDragging = false;
+                        mermaidElement.style.cursor = 'grab';
+                        updateTransform();
+                    }
+                });
+
+                // 获取两点之间的距离
+                function getTouchDistance(touch1, touch2) {
+                    return Math.hypot(
+                        touch2.clientX - touch1.clientX,
+                        touch2.clientY - touch1.clientY
+                    );
+                }
+
+                // Touch Events - 触摸事件处理
+                mermaidElement.addEventListener('touchstart', (e) => {
+                    isTouch = true;
+                    touchStartTime = Date.now();
+
+                    if (e.touches.length === 1) {
+                        // 单指拖动
+                        isPinching = false;
+                        isDragging = true;
+
+                        const touch = e.touches[0];
+                        startX = touch.clientX - translateX;
+                        startY = touch.clientY - translateY;
+
+                    } else if (e.touches.length === 2) {
+                        // 双指缩放
+                        isPinching = true;
+                        isDragging = false;
+
+                        const touch1 = e.touches[0];
+                        const touch2 = e.touches[1];
+                        initialDistance = getTouchDistance(touch1, touch2);
+                        initialScale = scale;
+                    }
+
+                    e.preventDefault();
+                }, { passive: false });
+
+                mermaidElement.addEventListener('touchmove', (e) => {
+                    if (e.touches.length === 1 && isDragging && !isPinching) {
+                        // 单指拖动
+                        const touch = e.touches[0];
+                        translateX = touch.clientX - startX;
+                        translateY = touch.clientY - startY;
+                        updateTransform();
+
+                    } else if (e.touches.length === 2 && isPinching) {
+                        // 双指缩放
+                        const touch1 = e.touches[0];
+                        const touch2 = e.touches[1];
+                        const currentDistance = getTouchDistance(touch1, touch2);
+
+                        if (initialDistance > 0) {
+                            const newScale = Math.min(Math.max(
+                                initialScale * (currentDistance / initialDistance),
+                                0.3
+                            ), 4);
+                            scale = newScale;
+                            updateTransform();
+                        }
+                    }
+
+                    e.preventDefault();
+                }, { passive: false });
+
+                mermaidElement.addEventListener('touchend', (e) => {
+                    // 重置状态
+                    if (e.touches.length === 0) {
+                        isDragging = false;
+                        isPinching = false;
+                        initialDistance = 0;
+
+                        // 延迟重置isTouch，避免鼠标事件立即触发
+                        setTimeout(() => {
+                            isTouch = false;
+                        }, 100);
+                    } else if (e.touches.length === 1 && isPinching) {
+                        // 从双指变为单指，切换为拖动模式
+                        isPinching = false;
+                        isDragging = true;
+
+                        const touch = e.touches[0];
+                        startX = touch.clientX - translateX;
+                        startY = touch.clientY - translateY;
+                    }
+
+                    updateTransform();
+                });
+
+                mermaidElement.addEventListener('touchcancel', (e) => {
+                    isDragging = false;
+                    isPinching = false;
+                    initialDistance = 0;
+
+                    setTimeout(() => {
+                        isTouch = false;
+                    }, 100);
+
+                    updateTransform();
+                });
+
+                // Enhanced wheel zoom with better center point handling
+                container.addEventListener('wheel', (e) => {
+                    e.preventDefault();
+                    const rect = container.getBoundingClientRect();
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+
+                    const delta = e.deltaY > 0 ? 0.9 : 1.1;
+                    const newScale = Math.min(Math.max(scale * delta, 0.3), 4);
+
+                    // Adjust translation to zoom towards center
+                    if (newScale !== scale) {
+                        const scaleDiff = newScale / scale;
+                        translateX = translateX * scaleDiff;
+                        translateY = translateY * scaleDiff;
+                        scale = newScale;
+
+                        if (scale <= 1) {
+                            translateX = 0;
+                            translateY = 0;
+                        }
+
+                        updateTransform();
+                    }
+                });
+
+                // Initialize display
+                updateTransform();
+            });
+        }
+
+        // Initialize mermaid controls after mermaid renders
+        setTimeout(() => {
+            initializeMermaidControls();
+        }, 1000);
+
+        // Mobile menu toggle
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const toc = document.getElementById('toc');
+            toc.classList.toggle('open');
+        });
+
+        // Close TOC when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+            const toc = document.getElementById('toc');
+            const menuToggle = document.getElementById('menu-toggle');
+            // Check if the click is outside the TOC and not on the menu toggle button
+            if (toc.classList.contains('open') && 
+                !toc.contains(event.target) && 
+                event.target !== menuToggle && 
+                !menuToggle.contains(event.target)) {
+                toc.classList.remove('open');
+            }
+        });
+
+        // Smooth scrolling for TOC links
+        document.querySelectorAll('#toc a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close TOC on mobile after clicking a link
+                    if (window.innerWidth < 1024) {
+                        document.getElementById('toc').classList.remove('open');
+                    }
+                }
+            });
+        });
+
+        // Highlight active section in TOC
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id], div[id]');
+            const tocLinks = document.querySelectorAll('#toc a[href^="#"]');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            tocLinks.forEach(link => {
+                link.classList.remove('text-teal-600', 'font-semibold');
+                link.classList.add('text-stone-600');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.remove('text-stone-600');
+                    link.classList.add('text-teal-600', 'font-semibold');
+                }
+            });
+        });
+    </script>
+  
+
+</body></html>
